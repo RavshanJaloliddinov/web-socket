@@ -35,9 +35,29 @@ export class AuthService {
     };
   }
 
-  async register(payload: CreateUserRequest) {
+  async register(payload: AuthRegisterDto) {
     await this.userService.create(payload)
-    return `This action returns all auth`;
+    const {email} = payload
+    const foundedUser = await this.userModel.findOne({where: {email}})
+    if(!foundedUser){
+      throw new NotFoundException("User not found")
+    }
+    const accesToken = await this.jwt.signAsync(
+      {
+        id: foundedUser.id,
+        email: foundedUser.email
+      },{
+        expiresIn: 120,
+        secret: "asssa",
+      }
+    )
+
+    return {
+      token: accesToken,
+      email: email,
+      id: foundedUser.id,
+      
+    };
   }
 
 
