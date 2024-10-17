@@ -11,7 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
       host: process.env.DB_HOST,
       port: 5432,
       username: "postgres",
-      password: "1111",
+      password: "2004",
       database: process.env.DB_NAME,
       autoLoadModels: true, 
       synchronize: true,
