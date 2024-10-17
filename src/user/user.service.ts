@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models';
-import { promises } from 'dns';
+import { CreateUserRequest, UpdateUserRequest } from './interfaces';
 
 @Injectable()
 export class UserService {
@@ -11,10 +9,10 @@ export class UserService {
   constructor(@InjectModel(User) private readonly userModel: typeof User) { }
 
 
-  async create(payload: CreateUserDto): Promise<void> {
+  async create(payload: CreateUserRequest): Promise<void> {
     await this.userModel.create({
       full_name: payload.full_name,
-      image: payload.image,
+      image: payload?.image,
       email: payload.email,
       password: payload.password,
     })
@@ -28,7 +26,7 @@ export class UserService {
     return await this.userModel.findOne({ where: { id } })
   }
 
-  async update(id: number, payload: UpdateUserDto): Promise<void> {
+  async update(id: number, payload: UpdateUserRequest): Promise<void> {
     await this.userModel.create({
       full_name: payload?.full_name,
       image: payload?.image,
