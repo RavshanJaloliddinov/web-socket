@@ -5,11 +5,12 @@ import { PassportModule } from '@nestjs/passport';
 import { UserModule } from 'src/user/user.module';
 import { User } from 'src/user/models';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { UserService } from 'src/user/user.service';
 
 
 @Module({
   imports: [SequelizeModule.forFeature([User])],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,UserService],
 })
 export class AuthModule {}

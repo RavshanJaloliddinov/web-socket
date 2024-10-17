@@ -4,11 +4,13 @@ import { AuthRegisterDto } from './dto/auth-register.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/user/models';
 import { JwtService } from '@nestjs/jwt';
+import { UserService } from 'src/user/user.service';
+import { CreateUserRequest } from 'src/user/interfaces';
 
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User) private userModel: typeof User,private jwt: JwtService){}
+  constructor(@InjectModel(User) private userModel: typeof User,private jwt: JwtService,private userService: UserService){}
   async login(payload: AuthLoginDto): Promise<object> {
     const {email,password} = payload
     const foundedUser = await this.userModel.findOne({where: {email}})
@@ -19,6 +21,9 @@ export class AuthService {
       {
         id: foundedUser.id,
         email: foundedUser.email
+      },{
+        expiresIn: 120,
+        secret: "asssa",
       }
     )
 
@@ -26,10 +31,12 @@ export class AuthService {
       token: accesToken,
       email: email,
       id: foundedUser.id,
+      
     };
   }
 
-  register(payload: AuthRegisterDto) {
+  async register(payload: CreateUserRequest) {
+    await this.userService.create(payload)
     return `This action returns all auth`;
   }
 

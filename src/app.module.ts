@@ -15,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
       database: process.env.DB_NAME,
       autoLoadModels: true, 
       synchronize: true,
-      sync: {force: true}
+      // sync: {force: true}
     }),
     JwtModule.register({
       secret: 'my secret',
