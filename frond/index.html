@@ -1,190 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Interface</title>
-    <link rel="stylesheet" href="./style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Siz bergan CSS qismi */
-        #chat2 .form-control {
-            border-color: transparent;
-        }
-
-        #chat2 .form-control:focus {
-            border-color: transparent;
-            box-shadow: inset 0px 0px 0px 1px transparent;
-        }
-
-        .divider:after,
-        .divider:before {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #eee;
-        }
-
-        /* Scroll uchun CSS */
-        .card-body {
-            overflow-y: auto;
-            max-height: 400px; /* Chat maydonining maksimal balandligi */
-            min-height: 200px; /* Chat maydonining minimal balandligi */
-        }
-
-        /* Boshqa uslublar */
-        .bg-body-tertiary {
-            background-color: #f8f9fa;
-        }
-
-        .bg-primary {
-            background-color: #007bff !important;
-        }
-
-        .text-muted {
-            color: #6c757d !important;
-        }
-
-        .rounded-3 {
-            border-radius: .5rem !important;
-        }
-
-        /* Flexbox orqali moslashuvchan qilish */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh; /* Barcha ekran balandligini egallash */
-        }
-
-        .card {
-            flex: 1; /* Chat kartasi bo'sh joyni egallaydi */
-        }
-
-        .card-footer {
-            flex-shrink: 0; /* Oziq-ovqat joylashuvi uchun */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Web Template</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 
+  .chat-sidebar {
+    height: 100vh;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+  }
+
+  .chat-list {
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .chat-window {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+  }
+
+  .message-input {
+    background-color: #fff;
+  }
+
+  .message-content {
+    max-width: 70%;
+  }
+
+  .message.sent .message-content {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .message.received .message-content {
+    background-color: #f1f1f1;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
 <body>
-    <section>
-        <div class="container py-5 chat-container">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-6">
-
-                    <div class="card" id="chat2">
-                        <div class="card-header d-flex justify-content-between align-items-center p-3">
-                            <h5 class="mb-0">Chat</h5>
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm"
-                                data-mdb-ripple-color="dark">Let's Chat App</button>
-                        </div>
-                        <div class="card-body" data-mdb-perfect-scrollbar-init>
-
-                            <div class="d-flex flex-row justify-content-start">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Hi</p>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">How are you ...???</p>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">What are you doing
-                                        tomorrow? Can we come up a bar?</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
-                                </div>
-                            </div>
-
-                            <div class="divider d-flex align-items-center mb-4">
-                                <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Today</p>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                                <div>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Hiii, I'm good.</p>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">How are you doing?</p>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Long time no see!
-                                        Tomorrow office. will be free on sunday.</p>
-                                    <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
-                                </div>
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-start mb-4">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Okay</p>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">We will go on
-                                        Sunday?</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">00:07</p>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end mb-4">
-                                <div>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">That's awesome!</p>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">I will meet you
-                                        Sandon Square sharp at 10 AM</p>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Is that okay?</p>
-                                    <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
-                                </div>
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-start mb-4">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Okay i will meet you on
-                                        Sandon Square</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">00:11</p>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end mb-4">
-                                <div>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Do you have pictures
-                                        of Matley Marriage?</p>
-                                    <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
-                                </div>
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-start mb-4">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div>
-                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Sorry I don't have. i
-                                        changed my phone.</p>
-                                    <p class="small ms-3 mb-3 rounded-3 text-muted">00:13</p>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end">
-                                <div>
-                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Okay then see you on
-                                        sunday!!</p>
-                                    <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:15</p>
-                                </div>
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                    alt="avatar 1" style="width: 45px; height: 100%;">
-                            </div>
-
-                        </div>
-                        <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
-                            <input type="text" class="form-control" placeholder="Type message" aria-label="Type message">
-                            <button class="btn btn-primary ms-2" type="button">Send</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar for Chats -->
+      <div class="col-md-4 col-12 p-0 chat-sidebar">
+        <div class="d-flex align-items-center p-3 border-bottom bg-light">
+          <div class="me-3">
+            <!-- <img src="https://via.placeholder.com/50" alt="User Avatar" class="rounded-circle"> -->
+          </div>
+          <div>
+            <h6 class="m-0">User Name</h6>
+            <small class="text-muted">Last seen today at 2:00 PM</small>
+          </div>
         </div>
-    </section>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</body>
 
+        <!-- Chat List -->
+        <div class="list-group chat-list">
+          <a href="#" id="chat1" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img src="https://via.placeholder.com/40" alt="Chat Avatar" class="rounded-circle me-3">
+              <div>
+                <h6 class="m-0">Chat 1</h6>
+                <small class="text-muted">Last message preview</small>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" id="chat2" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img src="https://via.placeholder.com/40" alt="Chat Avatar" class="rounded-circle me-3">
+              <div>
+                <h6 class="m-0">Chat 2</h6>
+                <small class="text-muted">Last message preview</small>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Chat Window -->
+      <div class="col-md-8 col-12 p-0 chat-window">
+        <div class="d-flex align-items-center p-3 border-bottom bg-light">
+          <div>
+            <h6 class="m-0" id="chat-name">Chat Name</h6>
+            <small class="text-muted" id="chat-status">Online</small>
+          </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chat1-messages" class="chat-messages p-4">
+          <div class="message received mb-3">
+            <div class="d-flex">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" class="rounded-circle me-3">
+              <div class="message-content bg-light p-2 rounded">
+                <p class="mb-0">This is Chat 1, received message.</p>
+                <small class="text-muted">2:00 PM</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="message sent text-end mb-3">
+            <div class="d-inline-block">
+              <div class="message-content bg-primary text-white p-2 rounded">
+                <p class="mb-0">This is Chat 1, sent message.</p>
+                <small class="text-white">2:05 PM</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chat2-messages" class="chat-messages p-4 hidden">
+          <div class="message received mb-3">
+            <div class="d-flex">
+              <img src="https://via.placeholder.com/40" alt="User Avatar" class="rounded-circle me-3">
+              <div class="message-content bg-light p-2 rounded">
+                <p class="mb-0">This is Chat 2, received message.</p>
+                <small class="text-muted">3:00 PM</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="message sent text-end mb-3">
+            <div class="d-inline-block">
+              <div class="message-content bg-primary text-white p-2 rounded">
+                <p class="mb-0">This is Chat 2, sent message.</p>
+                <small class="text-white">3:05 PM</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input p-3 border-top">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Type a message...">
+            <button class="btn btn-primary">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('chat1').addEventListener('click', function() {
+      document.getElementById('chat-name').innerText = 'Chat 1';
+      document.getElementById('chat-status').innerText = 'Online';
+      document.getElementById('chat1-messages').classList.remove('hidden');
+      document.getElementById('chat2-messages').classList.add('hidden');
+    });
+
+    document.getElementById('chat2').addEventListener('click', function() {
+      document.getElementById('chat-name').innerText = 'Chat 2';
+      document.getElementById('chat-status').innerText = 'Last seen today at 3:00 PM';
+      document.getElementById('chat1-messages').classList.add('hidden');
+      document.getElementById('chat2-messages').classList.remove('hidden');
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
