@@ -12,7 +12,7 @@ import { ChatModule } from './chat/chat.module';
       host: process.env.DB_HOST,
       port: 5432,
       username: "postgres",
-      password: "2004",
+      password: "1111",
       database: process.env.DB_NAME,
       autoLoadModels: true, 
       synchronize: true,

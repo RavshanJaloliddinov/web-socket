@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ChatService } from './chat.service';
 import { ChatController } from './chat.controller';
+import { UserService } from 'src/user/user.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from 'src/user/models';
+
 
 @Module({
-  controllers: [ChatController],
-  providers: [ChatService],
+  imports: [SequelizeModule.forFeature([User])],
+  providers: [ChatController, UserService],
 })
-export class ChatModule {}
+export class ChatModule { }
